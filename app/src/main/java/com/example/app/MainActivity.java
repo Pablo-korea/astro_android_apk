@@ -26,6 +26,29 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setSupportMultipleWindows(true); // 팝업을 허용
 
+        // 추가된 설정
+        webSettings.setUseWideViewPort(true); // WebView가 ViewPort 기능을 사용하게 함
+        webSettings.setLoadWithOverviewMode(true); // 페이지를 화면 크기에 맞게 로드
+        webSettings.setSupportZoom(true); // 줌 기능 활성화
+        webSettings.setBuiltInZoomControls(true); // 줌 컨트롤 추가
+        webSettings.setDisplayZoomControls(false); // 줌 컨트롤 안보이게 설정
+
+        // 타이틀바 숨기기
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        // 웹 페이지 로드가 완료된 후 자바스크립트로 헤더를 숨기는 코드 실행
+        myWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                myWebView.loadUrl("javascript:(function() { " +
+                        "var header = document.querySelector('header');" +
+                        "if (header) { header.style.display='none'; } " +
+                        "})()");
+            }
+        });
+
         // WebViewClient 설정
         myWebView.setWebViewClient(new WebViewClient());
 
@@ -59,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 로드할 URL 설정
-        myWebView.loadUrl("http://astromentor.whenluck.com:5000"); // 팝업이 발생할 웹사이트
+        //myWebView.loadUrl("http://astromentor.whenluck.com:5000"); // 팝업이 발생할 웹사이트
+        myWebView.loadUrl("http://43.201.105.108:9876/"); // 팝업이 발생할 웹사이트
     }
 }
